@@ -22,10 +22,15 @@ val commonModule = module {
     single<NotesLocalDataSource> { NotesLocalDataSourceImpl(get()) }
     single<NotesRepository> { NotesRepositoryImpl(get()) }
 
-    factory { ObserveNotesUseCase(get()) }
-    factory { ObserveNoteUseCase(get()) }
-    factory { SaveNoteUseCase(get()) }
-    factory { DeleteNoteUseCase(get()) }
+    single<ObserveNotesUseCase> { ObserveNotesUseCase(get()) }
+    single<ObserveNoteUseCase> { ObserveNoteUseCase(get()) }
+    single<SaveNoteUseCase> { SaveNoteUseCase(get()) }
+    single<DeleteNoteUseCase> { DeleteNoteUseCase(get()) }
+
+    //factory { ObserveNotesUseCase(get()) }
+    //factory { ObserveNoteUseCase(get()) }
+    //factory { SaveNoteUseCase(get()) }
+    //factory { DeleteNoteUseCase(get()) }
 
     viewModelOf(::NotesViewModel)
     viewModelOf(::NoteDetailViewModel)

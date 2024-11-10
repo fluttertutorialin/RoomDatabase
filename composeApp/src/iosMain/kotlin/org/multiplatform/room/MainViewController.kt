@@ -1,9 +1,13 @@
 package org.multiplatform.room
 
 import androidx.compose.ui.window.ComposeUIViewController
-import org.multiplatform.room.di.initKoin
+
+/*
+fun MainViewController() = ComposeUIViewController(
+    configure = { initKoin() }
+) { App() }*/
+
 
 fun MainViewController() = ComposeUIViewController {
-    initKoin()
     App()
 }
