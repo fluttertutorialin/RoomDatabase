@@ -12,7 +12,9 @@ import org.multiplatform.room.feature.detail.domain.SaveNoteUseCase
 import org.multiplatform.room.feature.detail.presentation.NoteDetailViewModel
 import org.multiplatform.room.feature.notes.presentation.NotesViewModel
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 expect val platformModule: Module
@@ -20,17 +22,22 @@ expect val platformModule: Module
 val commonModule = module {
     single { get<NotesDatabase>().notesDao() }
     single<NotesLocalDataSource> { NotesLocalDataSourceImpl(get()) }
-    single<NotesRepository> { NotesRepositoryImpl(get()) }
+    //single<NotesRepository> { NotesRepositoryImpl(get()) }
 
-    single<ObserveNotesUseCase> { ObserveNotesUseCase(get()) }
-    single<ObserveNoteUseCase> { ObserveNoteUseCase(get()) }
-    single<SaveNoteUseCase> { SaveNoteUseCase(get()) }
-    single<DeleteNoteUseCase> { DeleteNoteUseCase(get()) }
+    singleOf(::NotesRepositoryImpl).bind<NotesRepository>()
+
+    single { ObserveNotesUseCase(get()) }
+    single { ObserveNoteUseCase(get()) }
+    single { SaveNoteUseCase(get()) }
+    single { DeleteNoteUseCase(get()) }
 
     //factory { ObserveNotesUseCase(get()) }
     //factory { ObserveNoteUseCase(get()) }
     //factory { SaveNoteUseCase(get()) }
     //factory { DeleteNoteUseCase(get()) }
+
+    // singleOf(::SampleDataRepoImpl).bind<SampleDataRepo>()
+
 
     viewModelOf(::NotesViewModel)
     viewModelOf(::NoteDetailViewModel)
